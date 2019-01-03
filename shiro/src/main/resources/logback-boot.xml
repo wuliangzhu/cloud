@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <springProperty scope="context" name="logPath" source="log.path"/>
+    <springProperty scope="context" name="logLevel" source="log.level"/>
+    <springProperty scope="context" name="logName" source="log.name"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [%level] [%class:%line] - %m %n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="FILE-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/error.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [%level] [%class:%line] - %m %n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 30 days -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--    <root level="info">
+            <appender-ref ref="STDOUT" />
+        </root>-->
+    <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
+    <!-- com.sy.wz为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
+    <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
+    <!--    <logger name="com.sy.worth" level="${logLevel}">
+            <appender-ref ref="FILE-OUT" />
+        </logger>-->
+    <!--指定logger的设置，additivity指示是否遵循缺省的继承机制 -->
+    <logger name="com.wuliangzhu" additivity="false">
+        <level value ="error"/>
+        <appender-ref ref="FILE-OUT"/>
+    </logger>
+
+    <!-- 根logger的设置-->
+    <root>
+        <level value ="INFO"/>
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="DailyRollingFileAppender"/>-->
+    </root>
+</configuration>

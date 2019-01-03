@@ -1,0 +1,19 @@
+myapp:
+  name: "shiro"
+database:
+  host: localhost
+  port: 3306
+  databasename: test
+  username: root
+  password: root
+
+mysqlSize:
+  max: 8
+  min: 2
+  size: 2
+
+shiro:
+  session:
+    redis: localhost:6379
+    enable: true
+    password: Chris6612520
